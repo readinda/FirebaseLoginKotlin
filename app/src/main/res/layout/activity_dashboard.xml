@@ -6,4 +6,56 @@
     android:layout_height="match_parent"
     tools:context=".Dashboard">
 
+    <TableLayout
+        android:id="@+id/tl_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name : "
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Email : "
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email Verified : "
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/tvEmailVerifiied"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnLogout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tl_data"
+        android:text="Logout"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
