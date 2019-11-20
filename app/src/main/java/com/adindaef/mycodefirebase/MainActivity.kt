@@ -1,7 +1,9 @@
 package com.adindaef.mycodefirebase
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +16,23 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val sharedPrefManager = SharedPrefManager()
+        SharedPrefManager.sp = getSharedPreferences(SharedPrefManager.SP_MAHASISWA_APP, Context.MODE_PRIVATE)
+        SharedPrefManager.spEditor = SharedPrefManager.sp.edit()
+
+        if (sharedPrefManager.getSPSudahLogin()!!) {
+            startActivity(
+                Intent(this@MainActivity, Dashboard::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+            finish()
+        }
+
+        textforgot.setOnClickListener {
+            val intent = Intent (this, ForgotActivity::class.java)
+            startActivity(intent)
+        }
 
         textRegis.setOnClickListener {
             val intent = Intent (this, RegisterActivity::class.java)
@@ -38,6 +57,8 @@ class MainActivity : AppCompatActivity() {
                     inputEmail.setText("")
                     inputEmail.requestFocus()
                     inputPassword.setText("")
+
+                    sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, true)
                     if (!it.isSuccessful) {
 
                         val intent = Intent(this, MainActivity::class.java)
@@ -49,6 +70,7 @@ class MainActivity : AppCompatActivity() {
                         val intent = Intent(this, Dashboard::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         startActivity(intent)
+                        finish()
                     }
                 }
                 .addOnFailureListener{

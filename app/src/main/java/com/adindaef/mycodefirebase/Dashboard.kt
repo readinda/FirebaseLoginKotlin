@@ -1,5 +1,6 @@
 package com.adindaef.mycodefirebase
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -20,6 +21,8 @@ class Dashboard : AppCompatActivity() {
         val mDatabaseReference = mDatabase.reference.child("Users")
         val mAuth = FirebaseAuth.getInstance()
 
+        val sharedPrefManager = SharedPrefManager()
+
         val mUser = mAuth!!.currentUser
         val mUserReference = mDatabaseReference.child(mUser!!.uid)
         tvEmail!!.text = mUser.email
@@ -31,10 +34,14 @@ class Dashboard : AppCompatActivity() {
             override fun onCancelled(databaseError: DatabaseError) {}
         })
 
+
         btnLogout.setOnClickListener {
             mAuth.signOut()
             Toast.makeText(this, "Sign Out" , Toast.LENGTH_SHORT).show()
-
+            sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, false)
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
             finish()
         }
 
